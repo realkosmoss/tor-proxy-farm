@@ -4,11 +4,11 @@ import subprocess
 import psutil
 
 class ServiceInstaller:
-    # Path to the local Tor executable
-    service_executable = "tor.exe"
+    # Path to the Tor executable
+    service_executable = "tor"
 
     def __init__(self, total_ips):
-        self.temp_dir = os.path.join(tempfile.gettempdir(), "xoloservice")
+        self.temp_dir = os.path.join(tempfile.gettempdir(), "torservice")
         self.total_ips = total_ips
         self.stop_tor_service()
 
@@ -35,7 +35,7 @@ class ServiceInstaller:
 
     def stop_tor_service(self):
         for proc in psutil.process_iter(['name']):
-            if proc.info['name'] == "tor.exe":
+            if proc.info['name'] == "tor":
                 proc.terminate()
                 proc.wait()  # Ensure the process has terminated
 
@@ -50,5 +50,5 @@ def make(total_ips):
     
     return proxies
 
-ips = make(500)
+ips = make(5000)
 input(f"\nPROXIES GENERATED:\n{ips}\n\nPress enter to terminate the proxies...")
